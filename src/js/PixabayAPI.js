@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export function getPhotos(searchString) {
+export function getImagesByQuery(searchString) {
   const params = {
     q: searchString,
   };

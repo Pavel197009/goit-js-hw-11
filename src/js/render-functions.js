@@ -1,7 +1,11 @@
 
 // import * as bootstrap from 'bootstrap';
+import { refs } from './refs';
 
-export function createMarkup(photos) {
+import SimpleLightbox from 'simplelightbox';
+import "simplelightbox/dist/simple-lightbox.min.css";
+
+export function createGallery(photos) {
   const strings = photos
     .map(
       photo => 
@@ -40,5 +44,20 @@ export function createMarkup(photos) {
 </li>
 `
   );
-  return strings.join(" ");
+  refs.gallery.innerHTML = strings.join(" ");
+  const lightbox = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt', captionPosition: 'bottom', captionDelay: 250
+})
 }
+
+export function clearGallery() {
+  refs.gallery.innerHTML = "";
+}
+
+export function showLoader() {
+  refs.loadingText.style.visibility = 'visible';
+} 
+
+export function hideLoader() {
+  refs.loadingText.style.visibility = 'hidden';
+} 
