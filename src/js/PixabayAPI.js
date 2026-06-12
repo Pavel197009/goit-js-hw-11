@@ -1,16 +1,19 @@
 import axios from 'axios';
 
 export function getImagesByQuery(searchString) {
-  const params = {
+  const params = {                                        // создаем параметры для запроса
     q: searchString,
+    image_type: "photo",
+    orientation: "horizontal",
+    safeSearch: true,
   };
 
-  axios.defaults.baseURL = 'https://pixabay.com/api/';
-  const API_KEY = '28194821-49041d995ecd04735d9e20d11';
-  const urlAXIOS = `?key=${API_KEY}`;
+  axios.defaults.baseURL = 'https://pixabay.com/api/';    // URL-путь для запроса
+  const API_KEY = '28194821-49041d995ecd04735d9e20d11';   // ключ для запроса
+  const urlAXIOS = `?key=${API_KEY}`;                     // создаем строку поиска для запроса
   // const urlAXIOS = `?key=${API_KEY}&q=${this.#query}&page=${this.#page}&per_page=${this.#per_page}`;
 
-  return axios.get(urlAXIOS, { params });
+  return axios.get(urlAXIOS, { params });                 // axios get-запрос и возврат промиса
 }
 
  class PixabayAPI {

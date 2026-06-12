@@ -4,10 +4,11 @@ import { refs } from './refs';
 
 import SimpleLightbox from 'simplelightbox';
 import "simplelightbox/dist/simple-lightbox.min.css";
+let lightBox = null;
 
-export function createGallery(photos) {
+export function createGallery(photos) {                     // создание галереи по данным HTTP-запроса
   const strings = photos
-    .map(
+    .map(                                                   // создание массива HTML-фрагментов strings
       photo => 
         `<li class="gallery-item">
 <a class="gallery-link" href="${photo.largeImageURL}" >
@@ -44,20 +45,24 @@ export function createGallery(photos) {
 </li>
 `
   );
-  refs.gallery.innerHTML = strings.join(" ");
-  const lightbox = new SimpleLightbox('.gallery a', {
-    captionsData: 'alt', captionPosition: 'bottom', captionDelay: 250
-})
+  refs.gallery.innerHTML = strings.join(" ");               // создание галереи из массива strings
+  lightBox.refresh();                                       // обновление lightBox после построения галереи
 }
 
-export function clearGallery() {
+export function clearGallery() {                      // очистка галереи
   refs.gallery.innerHTML = "";
 }
 
-export function showLoader() {
-  refs.loadingText.style.visibility = 'visible';
+export function showLoader() {                        // делаем лоадер видимым
+  refs.loader.style.visibility = 'visible';
 } 
 
-export function hideLoader() {
-  refs.loadingText.style.visibility = 'hidden';
+export function hideLoader() {                        // скрываем лоадер
+  refs.loader.style.visibility = 'hidden';
 } 
+
+export function createLightBox() {                    // создание объекта SimpleLightBox
+  lightBox = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt', captionPosition: 'bottom', captionDelay: 250
+})
+}
