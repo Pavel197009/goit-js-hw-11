@@ -28,7 +28,7 @@ function handleSearchPhoto(e) {
     catch( error => {
        iziToast.error({ position: 'topRight', message: "Something went wrong!" });
        clearGallery();                                                             // очистка галереи
-    })
+    }).
     finally(() => {
         hideLoader();
     })
