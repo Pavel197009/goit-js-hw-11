@@ -13,5 +13,5 @@ export function getImagesByQuery(searchString) {
     page: 1,
     per_page: 20,
   };
-  return axios.get(urlAXIOS, { params }).then(res => res.data);                 // axios get-запрос и возврат промиса
+  return axios.get(urlAXIOS, { params }).then(response => response.data);                 // axios get-запрос и возврат промиса
 }
