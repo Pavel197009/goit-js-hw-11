@@ -4,7 +4,7 @@ axios.defaults.baseURL = 'https://pixabay.com/api/';    // URL-путь для �
 const API_KEY = '28194821-49041d995ecd04735d9e20d11';   // ключ для запроса
 const urlAXIOS = `?key=${API_KEY}`; 
 
-export function getImagesByQuery(searchString) {
+export async function getImagesByQuery(searchString) {
   const params = {                                        // создаем параметры для запроса
     q: searchString,
     image_type: "photo",
@@ -13,5 +13,6 @@ export function getImagesByQuery(searchString) {
     page: 1,
     per_page: 20,
   };
-  return axios.get(urlAXIOS, { params });                 // axios get-запрос и возврат промиса
+  const res = await axios.get(urlAXIOS, { params });                 // axios get-запрос и возврат промиса
+  return res.data;
 }

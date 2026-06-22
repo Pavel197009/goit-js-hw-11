@@ -8,7 +8,7 @@ import { refs } from './js/refs';
 
 refs.form.addEventListener("submit", handleSearchPhoto);
 
-function handleSearchPhoto(e) {
+async function handleSearchPhoto(e) {
     e.preventDefault();
     if (e.currentTarget.elements.search_text.value.trim().length === 0)        // если строка поиска пустая или пробелы
     {
@@ -18,17 +18,18 @@ function handleSearchPhoto(e) {
     let searchString = e.currentTarget.elements.search_text.value.trim().split(" ").join("+");  // преобразование строки поиска для HTTP-запроса
     clearGallery();                                                             // очистка галереи
     showLoader();                                                               // светим лоадер
-    let promise = getImagesByQuery(searchString).then(res => {                     // обработчик промиса 
-        if (!res.data.total) {                                                  // если ничего не вернули из запроса
-            iziToast.error({ position: 'topRight', message: `Sorry, there are no images matching your search query. Please try again!` });
+    try {
+        let data = await getImagesByQuery(searchString);                     // обработчик промиса 
+        if (!data.total) {                                                  // если ничего не вернули из запроса
+          iziToast.error({ position: 'topRight', message: `Sorry, there are no images matching your search query. Please try again!` });
         } else {                                                                // иначе строим галерею с картинками
-            createGallery(res.data.hits);
+          createGallery(data.hits);
         }
         hideLoader();                                                           // гасим лоадер после загрузки картинок
-    }).
-    catch(error =>{
-      iziToast.error({ position: 'topRight', message: "Something went wrong!" });
-      clearGallery();                                                             // очистка галереи
-      hideLoader();
-    }) 
+    }
+    catch {
+       iziToast.error({ position: 'topRight', message: "Something went wrong!" });
+       clearGallery();                                                             // очистка галереи
+       hideLoader();
+    }    
 }
